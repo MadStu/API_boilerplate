@@ -79,7 +79,7 @@ async function getStatus(e) {
     if (response.ok) {
         displayStatus(data);
     } else {
-        throw new Error(data.error);
+        displayException(data);
     }
 }
 
