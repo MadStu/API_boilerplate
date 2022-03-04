@@ -13,7 +13,6 @@ function processOptions(form) {
         }
     }
     form.delete("options");
-
     form.append("options", optArray.join());
 
     return form;
@@ -35,8 +34,20 @@ async function postForm(e) {
         if (response.ok) {
             displayErrors(data);
         } else {
-            throw new Error(data.error);
+            displayException(data);
         }
+}
+
+function displayException(data) {
+    errorDetails = `<div>The API returned status code ${data.status_code}</div>`;
+    errorDetails += `<div>Error number: ${data.error_no}</div>`;
+    errorDetails += `<div>Error text: ${data.error}</div>`;
+    
+    document.getElementById("resultsModalTitle").innerText = "An Exception Occuured";
+    document.getElementById("results-content").innerHTML = errorDetails;
+    resultsModal.show();
+
+    throw new Error(data.error);
 }
 
 function displayErrors(data) {
